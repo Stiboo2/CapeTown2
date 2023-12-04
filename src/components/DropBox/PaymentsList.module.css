@@ -1,0 +1,36 @@
+.paymentsList {
+    margin-top: 20px;
+  }
+  
+  .paymentsList h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .paymentsList ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .paymentsList img {
+    max-width: 10rem;
+    max-height: 10rem;
+    width: auto;
+    height: auto;
+    object-fit: cover;
+  }
+  .paymentsList li {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 0 10px 10px 0;
+    width: calc(33.33% - 20px); /* Three payments in a row with some spacing */
+    box-sizing: border-box;
+  }
+  
+  .paymentsList p {
+    margin: 5px 0;
+  }
+  
+  /* Add more styles as needed */
+  

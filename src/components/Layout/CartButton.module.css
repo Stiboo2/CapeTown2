@@ -1,0 +1,22 @@
+.loga {
+  font: inherit;
+  cursor: pointer;
+
+  background-color: var(--clr-green-dark);
+  border: 3px solid #e5f0e8;
+  color: rgb(241, 235, 235);
+  width: fit-content;
+  border-radius: 25px;
+  font-weight: bold;
+  justify-content: space-around;
+  display: flex;
+  align-items: center;
+  padding: 0.05rem 2rem;
+}
+
+.loga:hover,
+.loga:active {
+  background-color: #f0ff1a;
+  border-color: #080cd8;
+  color: #0602f7;
+}

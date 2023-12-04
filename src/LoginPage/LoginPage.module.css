@@ -1,0 +1,12 @@
+.closeLogIn {
+  display: flex;
+  position: absolute;
+  top: 0rem;
+  right: 0;
+  color: #f8f8f8;
+  transition: color 0.2s ease;
+}
+
+.closeLogIn:hover {
+  color: red;
+}

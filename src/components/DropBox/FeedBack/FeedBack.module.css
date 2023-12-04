@@ -1,0 +1,14 @@
+/* styles.module.css */
+
+.feedbackContainer {
+    position: fixed;
+    bottom: 20px; /* Adjust this value to control the distance from the bottom */
+    right: 2px; /* Adjust this value to control the distance from the right */
+
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 16px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  

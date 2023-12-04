@@ -1,0 +1,153 @@
+.navbar {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: var(--clr-primary-7);
+}
+.logo {
+  display: flex;
+  width: 150px;
+  height: 100px;
+  /* height: auto;  Automatically adjust the height while maintaining aspect ratio */
+}
+.logo {
+  margin-right: 1rem; /* Add margin for spacing between the logo and heading */
+}
+.headerContainer {
+  display: flex; /* Use flexbox to make the children inline */
+  align-items: center; /* Align items vertically in the center */
+  justify-content: center; /* Center items horizontally */
+  background-color: #333;
+
+}
+ul {
+  list-style-type: none;
+}
+a {
+  text-decoration: none;
+}
+
+.navMenu {
+  display: flex;
+  gap: 0.01 pix; /* Corrected gap value without space */
+}
+
+/* Override default link styles for .navItem */
+/* .navItem {
+  margin: 1.5rem;
+} */
+.navItem a {
+  text-decoration: none;
+  color: var(--clr-primary-1);
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+}
+.mainheader {
+  text-decoration: none;
+  color: var(--clr-primary-1);
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  background-color: #333;
+  color: #fff;
+  padding: 1em 0;
+  text-align: center;
+}
+
+.subtitle {
+  font-size: 1rem; /* Adjust the font size as needed */
+  vertical-align: bottom; /* Align the text to the top of the line */
+  margin-left: 0.2rem; /* Add some left margin for spacing */
+  color: rgb(216, 202, 13);
+}
+
+.navItem:hover {
+  color: var(--clr-primary-2);
+  text-decoration: underline;
+}
+.navItem a:hover,
+.navItem a.active {
+  color: var(--clr-primary-9);
+  text-decoration: underline;
+}
+.faTimes,
+.faBars {
+  font-size: 30px;
+  color: #f8f8f8;
+}
+.faBars:hover {
+  color: var(--clr-primary-9); /* Set the desired hover color */
+}
+.hamburger {
+  display: none;
+}
+.faTimes:hover {
+  color: var(--clr-red-dark); /* Set the desired hover color */
+}
+
+
+/* PaymentsList.module.css */
+
+
+
+.paymentsList ul {
+  list-style: none;
+  padding: 0;
+}
+
+.paymentsList li {
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f8f8f8;
+}
+
+/* Style for the image */
+.paymentsList li img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+
+
+@media screen and (max-width: 940px) {
+  .navMenu {
+    position: fixed;
+    left: -100%;
+    top: 3.2rem;
+    right: 0;
+    width: 15rem;
+    flex-direction: column;
+    justify-content: center;
+    background-color: var(--clr-primary-7);
+    text-align: center;
+    transition: 0.4s ease-in;
+    z-index: 10;
+    gap: 0rem;
+    padding: 0rem;
+  }
+
+  .navMenu.active {
+    left: 0;
+  }
+
+  .navItem {
+    padding: 0.5rem;
+    font-size: 1rem;
+    justify-content: center;
+  }
+  .navItem:hover {
+    background-color: yellow;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+}

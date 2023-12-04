@@ -1,0 +1,50 @@
+.button:hover {
+  background-color: #0056b3;
+}
+.button {
+  font: inherit;
+  cursor: pointer;
+  margin-left: 70rem;
+  margin-bottom: 0rem;
+  margin-top: 4rem;
+
+  background-color: #eceae9;
+  border: 3px solid #141413;
+  color: rgb(12, 12, 12);
+  width: fit-content;
+  border-radius: 20px;
+  font-weight: bold;
+  padding: 0.25rem 1rem; /* Adjust the padding as needed */
+}
+
+.button:hover,
+.button:active {
+  background-color: #641e03;
+  border-color: #f0ecea;
+  color: #faf8f8;
+}
+
+.buttonreload:hover {
+  background-color: #0056b3;
+}
+.buttonreload {
+  font: inherit;
+  cursor: pointer;
+  margin-left: 70rem;
+  margin-bottom: 0rem;
+
+  background-color: #000000;
+  border: 3px solid #e5f0e8;
+  color: rgb(241, 235, 235);
+  width: fit-content;
+  border-radius: 20px;
+  font-weight: bold;
+  padding: 0.25rem 1rem; /* Adjust the padding as needed */
+}
+
+.buttonreload:hover,
+.buttonreload:active {
+  background-color: #ff0000;
+  border-color: #080cd8;
+  color: #cbda45;
+}

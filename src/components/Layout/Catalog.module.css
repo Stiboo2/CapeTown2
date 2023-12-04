@@ -1,0 +1,26 @@
+.btnContainerSc {
+  display: flex;
+  justify-content: center;
+  margin-left: 3%; /* Corrected property name */
+}
+.filterBtn {
+  background: var(--clr-green-dark);
+  border-color: var(--clr-gold);
+  font-size: 1rem;
+  text-transform: capitalize;
+  margin: 0 0.5rem;
+  letter-spacing: 1px;
+  padding: 0 0.75rem;
+  color: var(--clr-white);
+  cursor: pointer;
+  transition: var(--transition);
+  border-radius: var(--radius);
+  margin-top: auto;
+  margin-bottom: auto;
+  font-weight: bold;
+}
+.filterBtn:hover {
+  color: rgb(33, 21, 202);
+  border-color: rgb(33, 21, 202);
+  background-color: yellow;
+}

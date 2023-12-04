@@ -1,0 +1,15 @@
+.meals {
+  text-align: center;
+
+  margin: auto;
+  margin-top: 0rem;
+  position: relative;
+
+  border-radius: 14px;
+  padding: 1rem;
+}
+
+.meals h2 {
+  font-size: 2rem;
+  margin-top: 0;
+}

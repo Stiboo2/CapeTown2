@@ -1,0 +1,23 @@
+/* UnauthorizedPage.module.css */
+
+.container {
+    text-align: center;
+    margin: 20px;
+  }
+  
+  .title {
+    font-size: 24px;
+    color: red;
+  }
+  
+  .paragraph {
+    font-size: 16px;
+    color: #333;
+  }
+  
+  .link {
+    color: blue;
+    text-decoration: none;
+    margin-top: 10px;
+  }
+  

@@ -1,0 +1,27 @@
+import React, { useState } from "react";
+import classes from "./ConfirmWindow.module.css";
+import Modal from "../UI/Modal";
+const ConfirmWindow = (props) => {
+  const modalActions = (
+    <div className={classes.actions}>
+      <button className={classes["button--alt"]} onClick={props.onClose}>
+        Close
+      </button>
+    </div>
+  );
+  const cartModalContent = (
+    <React.Fragment>
+      <div className={classes.total}>
+        <div>Thank You {props.title} {props.name} for submiting your tithe</div>
+      </div>
+      { modalActions}
+    </React.Fragment>
+  );
+
+  return (
+    <Modal onClose={props.onClose}>
+      { cartModalContent}
+    </Modal>
+  );
+};
+export default ConfirmWindow;

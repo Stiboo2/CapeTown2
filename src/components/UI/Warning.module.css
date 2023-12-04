@@ -1,0 +1,44 @@
+/* warning.module.css */
+.warningClass {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  font: inherit;
+  cursor: pointer;
+}
+.cancelbutton {
+  background-color: transparent;
+  border: 1px solid #8a2b06;
+  padding: 0.5rem 2rem;
+  border-radius: 25px;
+  margin-left: 1rem;
+  color: rgb(7, 7, 7);
+}
+.confirmbutton {
+  border-color: #5a1a01;
+  border: 1px solid #080808;
+  padding: 0.5rem 2rem;
+  border-radius: 25px;
+  margin-left: 1rem;
+  color: white;
+}
+.warningbutton {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.confirmbutton:hover,
+.confirmbutton:active {
+  background-color: #5a1a01;
+  border-color: #5a1a01;
+  color: white;
+}
+.cancelbutton:hover,
+.cancelbutton:active {
+  background-color: #d41515;
+  border-color: #080808;
+  color: white;
+}
