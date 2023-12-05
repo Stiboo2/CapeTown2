@@ -84,7 +84,6 @@ const SubmitProof = () => {
 
   return (
     <div>
-      <div>{LogIn && <LoginPage />}</div>
       {isLoading && <CircularLoadingModal/>}
       { !addMemberButton &&    
           <button className={classes.buttonAdd} onClick={AccountHandler}>
@@ -124,7 +123,7 @@ const SubmitProof = () => {
       </div>
       
       </div>
-      
+      <div>{LogIn && <LoginPage />}</div>
     </div>
   );
 };

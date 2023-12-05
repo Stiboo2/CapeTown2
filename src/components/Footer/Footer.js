@@ -22,7 +22,7 @@ const Container = styled.footer`
   background: var(--clr-black);
   text-align: center;
   span {
-    color: var(--clr-wh);
+    color: var(--clr-primary-1);
   }
   h5 {
     color: var(--clr-primary-9);
