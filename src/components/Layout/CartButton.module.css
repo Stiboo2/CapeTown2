@@ -2,9 +2,9 @@
   font: inherit;
   cursor: pointer;
 
-  background-color: var(--clr-green-dark);
-  border: 3px solid #e5f0e8;
-  color: rgb(241, 235, 235);
+  background-color: var(--clr-primary-9);
+  border: 3px solid #000000;
+  color: rgb(0, 0, 0);
   width: fit-content;
   border-radius: 25px;
   font-weight: bold;
@@ -16,7 +16,7 @@
 
 .loga:hover,
 .loga:active {
-  background-color: #f0ff1a;
-  border-color: #080cd8;
-  color: #0602f7;
+  background-color: #ececf0;
+  border-color: yellow;
+  color: blue;
 }
