@@ -13,6 +13,7 @@ import UpdateMember from "./components/UpdateMember";
 import BirthDay from "./components/BirthDays/BirthDay";
 import SubmitProof from "./components/DropBox/SubmitProof";
 import PaymentsList from "./components/DropBox/PaymentList";
+import ImageComponent from "./components/DropBox/ImageComponent";
 
 
 const router = createBrowserRouter([
@@ -26,6 +27,7 @@ const router = createBrowserRouter([
       { path: "sendreport", element: <Meals /> },
       { path: "SubmitProof", element: <SubmitProof/>},
       { path: "PaymentsList", element: <PaymentsList /> },
+      { path: "/image/:id", element: <ImageComponent />},
       { path: "churchDataBase", element: <Database /> },
       { path: "updateMember/:id", element: <UpdateMember /> },
       { path: "birthday", element: <BirthDay /> },

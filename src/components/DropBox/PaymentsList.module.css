@@ -33,4 +33,37 @@
   }
   
   /* Add more styles as needed */
-  
+  /* Update with your actual stylesheet path */
+/* Add this style to your existing stylesheet or create a new one */
+
+.tbody-style {
+  color: white;
+}
+
+.tbody-style td {
+  padding: 10px; /* Adjust as needed */
+}
+
+.tbody-style .link-cell {
+  /* Style for the cell containing the link */
+  /* Add any additional styles you need */
+}
+
+/* PaymentsList.module.css */
+
+/* PaymentsList.module.css */
+
+.linkCell {
+  color: blue;
+  text-decoration: double; /* Set text-decoration to 'none' initially */
+  font-weight: bold;
+}
+
+.linkCell:hover {
+  text-decoration: underline; /* Apply underline on hover */
+}
+
+.linkCell:visited {
+  color: yellow;
+  font-weight: bold;
+}

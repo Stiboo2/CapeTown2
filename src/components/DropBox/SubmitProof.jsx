@@ -25,6 +25,8 @@ const SubmitProof = () => {
   const [accountVisible, setAccountVisible] = useState(true);
   const [confirmWindowIsShown, setConfirmWindowIsShown] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [feedbackSubVisible, setFeedbackSubVisible] = useState(true);
+  const [feedbackCount, setFeedbackCount] = useState(false);
 
   const MemberHandler = () => {
     setAddMemberButton(!addMemberButton); // delete**** change the name
@@ -33,11 +35,16 @@ const SubmitProof = () => {
   const SaveProof = (ProofofPayment) => {
     setProofofPayment(ProofofPayment);
     MemberHandler();
-    setFeedback(true)
-    
+    setFeedback(true);
+    setFeedbackCount(false);
+    setFeedbackSubVisible(false);
   };
-
   const FeedbackHandler = () => {
+    if (feedbackCount) {
+    setFeedbackSubVisible(false)
+    } else {
+      setFeedbackCount(true)
+    }
     setFeedbackVisible((prevVisible) => !prevVisible);
   };
   const AccountHandler = () => {
@@ -56,7 +63,6 @@ const SubmitProof = () => {
           const response = await fetch(`${apiEndpoint}/${parentNode}/${proofofPayment.id}.json`, {
             method: "PUT",
             body: JSON.stringify(proofofPayment),
-            
           });
           setIsLoading(false)
           if (response.ok) {
@@ -106,7 +112,7 @@ const SubmitProof = () => {
         )}
 
 
-        { !addMemberButton && feedback && myUser  && !myUser.email.endsWith("@tac-idwalalethu.com") &&
+        { !addMemberButton && feedback && (myUser  && !myUser.email.endsWith("@tac-idwalalethu.com") | !myUser) && feedbackSubVisible &&
           <button className={classes.buttonAdd} onClick={FeedbackHandler}>
             {feedbackVisible ? "Feedback"  : "Submit"}
           </button>

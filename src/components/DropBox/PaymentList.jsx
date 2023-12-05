@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import classes from "./PaymentsList.module.css"; // Update with your actual stylesheet path
-import { useNavigate } from "react-router-dom";
 import { useUserContext } from "../../store/user_context";
 
 const PaymentsList = () => {
-
   const navigate = useNavigate();
   const { myUser } = useUserContext();
-  
+  const [payments, setPayments] = useState([]);
+
   useEffect(() => {
     console.log("inside BirthDay component useEffect");
     if (!myUser) {
@@ -18,7 +18,6 @@ const PaymentsList = () => {
       // Perform other actions related to BirthDay component
     }
   }, [myUser, navigate]);
-  const [payments, setPayments] = useState([]);
 
   useEffect(() => {
     const fetchPayments = async () => {
@@ -49,24 +48,58 @@ const PaymentsList = () => {
   return (
     <div className={classes.paymentsList}>
       <h2>Payments List</h2>
-      <ul>
-        {payments.map((payment) => (
-          <li key={payment.id}>
-            <img src={payment.image} alt={`Payment ${payment.id}`} className={classes.paymentImage} />
-            <p>ID: {payment.id}</p>
-            <p>Name: {payment.name}</p>
-            <p>Date: {payment.date}</p>
-            <p>Title: {payment.title}</p>
-            <p>Branch: {payment.branch}</p>
-            <p>Type: {payment.type}</p>
-            <p>Cell: {payment.cell}</p>
-            <p>Amount: {payment.amount}</p>
-            <p>Province: {payment.province}</p> 
-          </li>
-        ))}
-      </ul>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Date</th>
+            <th>Title</th>
+            <th>Name</th>
+            <th>Cell</th>
+            <th>Province</th>
+            <th>Branch</th>
+            <th>Type</th>
+            <th>Amount</th>
+            <th>Slip</th>
+          </tr>
+        </thead>
+        <tbody>
+          {payments.map((payment) => (
+            <tr key={payment.id}>
+              <td style={style.tbody}>{payment.id}</td>
+              <td style={style.tbody}>{payment.date}</td>
+              <td style={style.tbody}>{payment.title}</td>
+              <td style={style.tbody}>{payment.name}</td>
+              <td style={style.tbody}>{payment.cell}</td>
+              <td style={style.tbody}>{payment.province}</td>
+              <td style={style.tbody}>{payment.branch}</td>
+              <td style={style.tbody}>{payment.type}</td>
+              <td style={style.tbody}>{payment.amount}</td>
+              <td>
+                <Link to={`/image/${payment.id}`} className={classes.linkCell}>
+                  View
+                </Link>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <div>
+        <button onClick={() => navigate(-1)}>Go Back</button>
+      </div>
     </div>
   );
+};
+
+// Define styles
+const style = {
+  tbody: {
+    color: 'white',
+    padding: '10px',
+  },
+  linkCell: {
+    // Add any additional styles you need
+  },
 };
 
 export default PaymentsList;
