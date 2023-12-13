@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-
+padding: 1rem;
 }
 .firstRows{
   display: flex;
@@ -36,6 +36,13 @@
 }
 .secondRow{
   display: flex;
+  color: rgb(0, 0, 2);
+  gap: 0.3rem;
+  padding: 0.2rem 0;
+}
+.thirdRow{
+  display: flex;
+  justify-content:flex-start;
   color: rgb(0, 0, 2);
   gap: 0.3rem;
   padding: 0.2rem 0;
