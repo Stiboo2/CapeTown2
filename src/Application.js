@@ -14,6 +14,7 @@ import BirthDay from "./components/BirthDays/BirthDay";
 import SubmitProof from "./components/DropBox/SubmitProof";
 import PaymentsList from "./components/DropBox/PaymentList";
 import ImageComponent from "./components/DropBox/ImageComponent";
+import CashBook from "./components/CashBook/CashBook";
 
 
 const router = createBrowserRouter([
@@ -31,6 +32,7 @@ const router = createBrowserRouter([
       { path: "churchDataBase", element: <Database /> },
       { path: "updateMember/:id", element: <UpdateMember /> },
       { path: "birthday", element: <BirthDay /> },
+      { path: "cashbook", element: <CashBook /> },
     ],
   },
 ]);

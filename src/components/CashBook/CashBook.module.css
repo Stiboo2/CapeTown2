@@ -1,0 +1,62 @@
+.container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+.firstRows{
+  display: flex;
+  justify-content:flex-start;
+  background-color: white ;
+  gap: 1rem;
+  padding: 0.3rem;
+
+}
+.mainBox{
+  display: flex;
+  flex-direction: column;
+  justify-content:space-between;
+  background-color: white ;
+  border: 3px solid  blue;
+  color: rgb(189, 26, 26); 
+}
+.imageContainer{
+ align-self: flex-start;
+}
+.address{
+  order: 2;
+  text-align: left;
+}
+.addressText{
+  color: blue;
+}
+.addressTextdetails{
+  color: rgb(0, 0, 2);
+  font-size: 0.8rem;
+}
+.secondRow{
+  display: flex;
+  color: rgb(0, 0, 2);
+  gap: 0.3rem;
+  padding: 0.2rem 0;
+}
+.image {
+  width: 5rem;
+  height: 5rem;
+}
+.receiptNumber{
+  order: 3;
+  text-align: right;
+  margin-left: auto
+}
+.receivedFromLabel{
+  font-size: 1.2rem;
+}
+.provinceControlClasses{
+  font-size: 1rem;
+}
+.input {
+  font-size: 1rem;
+  border-radius:0;
+  flex-grow: 1;
+}

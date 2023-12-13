@@ -4,7 +4,7 @@ import React from 'react';
 import styles from './AccountNumber.module.css'; // Adjust the import path
 
 const AccountNumber = () => {
-  const imageUrl = 'https://res.cloudinary.com/dkayrcyeb/image/upload/v1700916786/church/im4vhtpxrsusbsscjfkk.jpg';
+  const imageUrl = 'https://res.cloudinary.com/dkayrcyeb/image/upload/v1701881007/church/AccountTAC_qtcmsn.jpg';
 
   return (
     <div className={styles.container}>

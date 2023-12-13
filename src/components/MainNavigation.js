@@ -124,12 +124,20 @@ const MainNavigation = () => {
               
             </NavLink>
           </li>
+
+            <li className={classes.navItem}>
+            <NavLink
+              to="cashbook"
+              className={({ isActive }) =>
+                isActive ? classes.active : undefined
+              }
+            >
+              Cash Book
+            </NavLink>
+          </li>
         </ul>
       </nav>
       <LogInAndOut></LogInAndOut>
-      {/*    <button className={classes.loga} onClick={buttonWantToLogIn}>
-        {LogIn ? "Loging-in" : "Login"}
-      </button> */}
       <div className={classes.hamburger} onClick={handleClick}>
         {click ? (
           <FaTimes className={classes.faTimes} />
