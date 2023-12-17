@@ -69,10 +69,12 @@ a {
   color: var(--clr-primary-2);
   text-decoration: underline;
 }
-.navItem a:hover,
-.navItem a.active {
+.navItem a:hover {
   color: var(--clr-primary-9);
   text-decoration: underline;
+}
+.navItem a.active {
+  color: var(--clr-primary-6);
 }
 .faTimes,
 .faBars {

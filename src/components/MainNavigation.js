@@ -94,7 +94,7 @@ const MainNavigation = () => {
           </li>
           <li className={classes.navItem}>
             <NavLink
-              to="birthday"
+              to="birthdaya"
               className={({ isActive }) =>
                 isActive ? classes.active : undefined
               }

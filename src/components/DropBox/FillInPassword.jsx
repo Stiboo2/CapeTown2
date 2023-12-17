@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useUserContext } from "../../store/user_context";
 
 const FillInPassword = () => {
+  const storedPassword = process.env.REACT_APP_PAYMENT_PASSWORD;
   const navigate = useNavigate();
   const { myUser } = useUserContext(); // Access the user information from context
   
@@ -31,7 +32,7 @@ const FillInPassword = () => {
       myUser &&
       myUser.email &&
       myUser.email.endsWith("@tac-idwalalethu.com") &&
-      password === "newdawn"
+      password === storedPassword
     ) {
       navigate("/PaymentsList"); // Redirect to the Payments slip List page
     } else {
