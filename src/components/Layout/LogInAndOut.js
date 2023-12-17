@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { FaShoppingCart, FaUserMinus, FaUserPlus } from "react-icons/fa";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { useUserContext } from "../../store/user_context";
 import { signOut } from "firebase/auth";
-import classes from "./CartButton.module.css";
+import classes from "./LogInAndOut.module.css";
 import { useGlobalContext } from "../../store/context";
 
 const LogInAndOut = () => {
