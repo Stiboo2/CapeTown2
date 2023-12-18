@@ -15,7 +15,12 @@ const Home = () => {
           <h4 className={classes.textSite}>Website </h4>
         </div>
 
-       </div>
+  {/*       <img
+          className={classes.fullscreenImage}
+          src="https://res.cloudinary.com/dkayrcyeb/image/upload/v1690564867/20220710_082245_r0i2aw.jpg"
+          alt="Home Image"
+        /> */}
+      </div>
       <div>{LogIn && <LoginPage />}</div>
     </>
   );

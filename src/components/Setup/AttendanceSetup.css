@@ -1,0 +1,89 @@
+.home-pagea {
+  font-family: Arial, sans-serif;
+  margin-top: -5rem;
+  margin-bottom: 6rem;
+}
+
+.date {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: rgb(84, 81, 207);
+}
+
+.church-branch,
+.pastor {
+  font-size: 1rem;
+  color: rgb(24, 21, 179);
+  padding: 5px;
+  border-radius: 10px;
+}
+
+.church-branch::before,
+.pastor::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: rgb(218, 26, 26);
+  margin-right: 4px;
+  vertical-align: middle;
+}
+
+/* IntSetUp.css */
+
+.forms {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+  color: #fff;
+  margin-top: 50px;
+}
+
+.forms div {
+  margin-bottom: 10px;
+}
+
+label {
+  margin-right: 5px;
+  font-weight: bold;
+}
+
+input {
+  padding: 5px;
+  border-radius: 10px;
+}
+input[type="date"] {
+  padding: 5px;
+  border-radius: 10px;
+  font-family: Arial, sans-serif; /* Specify the desired font family */
+  /* Add any additional styles as needed */
+}
+button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+.forms button {
+  font: inherit;
+  cursor: pointer;
+  background-color: #8a2b06;
+  border: 3px solid #f1efee;
+  color: white;
+  width: fit-content;
+  border-radius: 20px;
+  font-weight: bold;
+  padding: 0.25rem 1rem; /* Adjust the padding as needed */
+}
+
+.forms button:hover,
+.forms button:active {
+  background-color: #641e03;
+  border-color: #641e03;
+}

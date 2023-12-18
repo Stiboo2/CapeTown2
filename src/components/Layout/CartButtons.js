@@ -7,7 +7,7 @@ import { signOut } from "firebase/auth";
 import classes from "./CartButton.module.css";
 import { useGlobalContext } from "../../store/context";
 
-const LogInAndOut = () => {
+const CartButtons = () => {
   const { auth, myUser } = useUserContext();
   const { setWantToLogIn, LogIn } = useGlobalContext();
   const [logBtnClick, setLogBtnClick] = useState(LogIn);
@@ -25,11 +25,11 @@ const LogInAndOut = () => {
     <Wrapper className="cart-btn-wrapper">
       {myUser ? (
         <button type="button" className="auth-btn" onClick={logout}>
-          Logout
+          Logout <FaUserMinus />
         </button>
       ) : (
         <button className={classes.loga} onClick={buttonWantToLogIn}>
-          {LogIn ? "Loging....IN" : "Login"}
+          {LogIn ? "Loging-in" : "Login"}
         </button>
       )}
     </Wrapper>
@@ -89,14 +89,15 @@ const Wrapper = styled.div`
     align-items: center;
     background: transparent;
     border-color: white;
-    // font-size: 1.5rem;
+    font-size: 1.5rem;
     cursor: pointer;
     color: white;
     border-radius: 25px;
-    padding: 0.25rem 1rem;
+    padding: 0.5rem 1rem;
+    display: flex;
     justify-content: space-around;
     align-items: center;
-    // letter-spacing: var(--spacing);
+    letter-spacing: var(--spacing);
 
     svg {
       margin-left: 5px;
@@ -104,4 +105,4 @@ const Wrapper = styled.div`
   }
 `;
 
-export default LogInAndOut;
+export default CartButtons;
