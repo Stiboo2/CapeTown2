@@ -1,34 +1,17 @@
 import { NavLink, useLocation } from "react-router-dom";
-import { Link } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import classes from "./MainNavigation.module.css";
 import { FaBars, FaTimes } from "react-icons/fa";
 import Logo from "../assets/logo.png";
-import { useGlobalContext } from "../store/context";
-import { useUserContext } from "../store/user_context";
-import CartButtons from "./Layout/CartButtons";
 import LogInAndOut from "./Layout/LogInAndOut";
 
 const MainNavigation = () => {
-  const { myUser } = useUserContext();
-  const { LogIn } = useGlobalContext();
   const location = useLocation();
   const [click, setClick] = useState(false);
   useEffect(() => {
     setClick(false);
   }, [location]);
   const handleClick = () => setClick((prevState) => !prevState);
-
-  /*   if (myUser) {
-    setWantToLogIn(false);
-
-      const handleNavLinkClick = () => {
-    setClick(false);
-  };
-
-    onClick={handleNavLinkClick} // Close the menu when NavLink is clicked
-            > 
-  } */
 
   return (
     <div>
@@ -42,8 +25,6 @@ const MainNavigation = () => {
 
     </div>
     <div className={classes.navbar}>
-
-
       <nav>
         <ul
           className={
@@ -121,7 +102,6 @@ const MainNavigation = () => {
               }
             >
               UPLOAD PROOF
-              
             </NavLink>
           </li>
 
