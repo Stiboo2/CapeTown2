@@ -6,7 +6,17 @@ const CashBook = () => {
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [selectedOtherOptions, setSelectedOtherOptions] = useState(false);
   const [otherInputValue, setOtherInputValue] = useState('');
-  
+  const [selectedDate, setSelectedDate] = useState('');
+
+  useEffect(() => {
+    // Get today's date in the format "YYYY-MM-DD"
+    const formattedDate = new Date().toISOString().split('T')[0];
+    setSelectedDate(formattedDate);
+  }, []);
+
+  const handleDateChange = (e) => {
+    setSelectedDate(e.target.value);
+  };
   const handleOptionChange = (e) => {
     const option = e.target.value;
 
@@ -103,6 +113,8 @@ const CashBook = () => {
             />
             Other
           </label>
+          <label className={classes.receivedFromLabel} htmlFor="date">Date:</label>
+          <input className={classes.date} type="date" id="date" value={selectedDate} onChange={handleDateChange} />
         </div>
        {selectedOtherOptions && (
             <input
@@ -116,14 +128,17 @@ const CashBook = () => {
           )}
         <div className={classes.fourthRow}>
           <span className={classes.receivedFromLabel}>RECIEVED BY :   </span>
-          <input type="text" id="Branch" placeholder="Branch" className={classes.input} />
+          <input type="text" id="recieved_by" placeholder="Spender" className={classes.input} />
           <span className={classes.receivedFromLabel}>SIGN BY :   </span>
-          <input type="text" id="Branch" placeholder="Branch" className={classes.input} />
+          <input type="text" id="sign_by" placeholder="High Authority " className={classes.input} />
         </div>
         {selectedOptions.length > 0 && (
           <p>
             Selected Options: {selectedOptions.includes('Other') ? selectedOptions.filter(option => option !== 'Other').join(', ') : selectedOptions.join(', ')}
             {selectedOptions.includes('Other') && `, Other: ${otherInputValue}`}
+          <span className={classes.amount}>AMOUNT :R   
+          <input type="text" id="recieved_by" placeholder="0.00" className={classes.inputAmount} />
+          </span>
           </p>
         )}
       </div>

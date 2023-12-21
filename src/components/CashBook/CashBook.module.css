@@ -45,14 +45,13 @@ padding: 1rem;
   justify-content:flex-start;
   color: rgb(0, 0, 2);
   gap: 0.3rem;
-  padding: 0.2rem ;
+  /* padding: 0.2rem ; */
 }
 .fourthRow{
   display: flex;
   justify-content:flex-start;
   color: rgb(0, 0, 2);
   gap: 0.3rem;
-  padding: 0.2rem ;
 }
 .image {
   width: 5rem;
@@ -73,4 +72,20 @@ padding: 1rem;
   font-size: 1rem;
   border-radius:0;
   flex-grow: 1;
+  margin : 0.2rem;
+}
+.inputAmount{
+  font-size: 1rem;
+  border-radius:0;
+  flex-grow: 1;
+  margin : 0.2rem;
+  width: 5rem;
+}
+.amount {
+  font-size: 1.2rem;
+  margin-left: 0.5rem ;
+  margin-right: 0.2rem ;
+}
+.date{
+  margin-right: 0.2rem ;
 }
