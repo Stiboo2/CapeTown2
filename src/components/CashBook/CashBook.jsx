@@ -136,7 +136,7 @@ const CashBook = () => {
           <p>
             Selected Options: {selectedOptions.includes('Other') ? selectedOptions.filter(option => option !== 'Other').join(', ') : selectedOptions.join(', ')}
             {selectedOptions.includes('Other') && `, Other: ${otherInputValue}`}
-          <span className={classes.amount}>AMOUNT :R   
+          <span className={classes.amount}>AMOUNT :<span style={{ color: 'black' }}>R</span>   
           <input type="text" id="recieved_by" placeholder="0.00" className={classes.inputAmount} />
           </span>
           </p>
