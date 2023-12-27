@@ -1,7 +1,7 @@
 import { useState } from "react";
-import classes from "./UploadProof.module.css";
-import { useGlobalContext } from "../../store/context";
-const UploadProof = (props) => {
+import classes from "./UploadCashBook.module.css";
+import { useGlobalContext } from "../../../store/context";
+const UploadCashBook = (props) => {
   const { setFlagProof } = useGlobalContext();
   const [ProofPic, setProofPic] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
@@ -93,4 +93,4 @@ const UploadProof = (props) => {
   );
 };
 
-export default UploadProof;
+export default UploadCashBook;

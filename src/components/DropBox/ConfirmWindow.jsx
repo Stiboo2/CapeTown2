@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import classes from "./ConfirmWindow.module.css";
 import Modal from "../UI/Modal";
 const ConfirmWindow = (props) => {
@@ -12,16 +12,14 @@ const ConfirmWindow = (props) => {
   const cartModalContent = (
     <React.Fragment>
       <div className={classes.total}>
-        <div>Thank You {props.title} {props.name} for submiting your tithe</div>
+        <div>
+          Thank You {props.title} {props.name} for submiting your tithe
+        </div>
       </div>
-      { modalActions}
+      {modalActions}
     </React.Fragment>
   );
 
-  return (
-    <Modal onClose={props.onClose}>
-      { cartModalContent}
-    </Modal>
-  );
+  return <Modal onClose={props.onClose}>{cartModalContent}</Modal>;
 };
 export default ConfirmWindow;

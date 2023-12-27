@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from "react";
 import "./Expenses.css";
-import "./MealsButton.css"; 
+import "./MealsButton.css";
 import "./Meals.css";
 import classes from "./page.module.css";
 import ProofForm from "./ProofForm";
@@ -30,7 +30,7 @@ const SubmitProof = () => {
 
   const MemberHandler = () => {
     setAddMemberButton(!addMemberButton); // delete**** change the name
-    setFeedback(true)
+    setFeedback(true);
   };
   const SaveProof = (ProofofPayment) => {
     setProofofPayment(ProofofPayment);
@@ -41,9 +41,9 @@ const SubmitProof = () => {
   };
   const FeedbackHandler = () => {
     if (feedbackCount) {
-    setFeedbackSubVisible(false)
+      setFeedbackSubVisible(false);
     } else {
-      setFeedbackCount(true)
+      setFeedbackCount(true);
     }
     setFeedbackVisible((prevVisible) => !prevVisible);
   };
@@ -55,18 +55,21 @@ const SubmitProof = () => {
   };
   useEffect(() => {
     if (proofofPayment) {
-      setIsLoading(true)
+      setIsLoading(true);
       const sendProofCloud = async () => {
         const parentNode = "payments";
         const apiEndpoint = process.env.REACT_APP_API_BASE_URL;
         try {
-          const response = await fetch(`${apiEndpoint}/${parentNode}/${proofofPayment.id}.json`, {
-            method: "PUT",
-            body: JSON.stringify(proofofPayment),
-          });
-          setIsLoading(false)
+          const response = await fetch(
+            `${apiEndpoint}/${parentNode}/${proofofPayment.id}.json`,
+            {
+              method: "PUT",
+              body: JSON.stringify(proofofPayment),
+            }
+          );
+          setIsLoading(false);
           if (response.ok) {
-            setConfirmWindowIsShown(true)
+            setConfirmWindowIsShown(true);
           }
           if (!response.ok) {
             throw new Error("Sending proof data failed.");
@@ -84,44 +87,56 @@ const SubmitProof = () => {
 
   return (
     <div>
-      {isLoading && <CircularLoadingModal/>}
-      { !addMemberButton &&    
-          <button className={classes.buttonAdd} onClick={AccountHandler}>
-            {accountVisible ? "Account Number"  : "Got it"}
-          </button>
-      } 
-      {!accountVisible && !addMemberButton && <AccountNumber/>}
+      {isLoading && <CircularLoadingModal />}
+      {!addMemberButton && (
+        <button className={classes.buttonAdd} onClick={AccountHandler}>
+          {accountVisible ? "Account Number" : "Got it"}
+        </button>
+      )}
+      {!accountVisible && !addMemberButton && <AccountNumber />}
       <div>
-      <div className="meals">
-        {confirmWindowIsShown && <ConfirmWindow title={proofofPayment.title} name={proofofPayment.name} onClose={hideConfirmWindowHandler} />}
-        {!submitted && (
-          <Fragment>
-            {addMemberButton && (
-              <ProofForm onConfirm={SaveProof} onCancelMeal={MemberHandler} />
+        <div className="meals">
+          {confirmWindowIsShown && (
+            <ConfirmWindow
+              title={proofofPayment.title}
+              name={proofofPayment.name}
+              onClose={hideConfirmWindowHandler}
+            />
+          )}
+          {!submitted && (
+            <Fragment>
+              {addMemberButton && (
+                <ProofForm onConfirm={SaveProof} onCancelMeal={MemberHandler} />
+              )}
+              {!addMemberButton && (
+                <>
+                  <button className={classes.buttonAdd} onClick={MemberHandler}>
+                    Submit the Recept/Proof Of Payment
+                  </button>
+                </>
+              )}
+            </Fragment>
+          )}
+
+          {!addMemberButton &&
+            feedback &&
+            myUser &&
+            !myUser.email.endsWith("@tac-idwalalethu.com") | !myUser &&
+            feedbackSubVisible && (
+              <button className={classes.buttonAdd} onClick={FeedbackHandler}>
+                {feedbackVisible ? "Feedback" : "Submit"}
+              </button>
             )}
-            {!addMemberButton && (
-              <>
-                <button className={classes.buttonAdd} onClick={MemberHandler}>
-                  Submit the Recept/Proof Of Payment
-                </button>
 
-              </>
-            )}
-          </Fragment>
-        )}
+          {!feedbackVisible &&
+            myUser &&
+            !myUser.email.endsWith("@tac-idwalalethu.com") &&
+            !addMemberButton && <FeedBack />}
 
-
-        { !addMemberButton && feedback && (myUser  && !myUser.email.endsWith("@tac-idwalalethu.com") | !myUser) && feedbackSubVisible &&
-          <button className={classes.buttonAdd} onClick={FeedbackHandler}>
-            {feedbackVisible ? "Feedback"  : "Submit"}
-          </button>
-        }
-      
-        {(!feedbackVisible && (myUser  && !myUser.email.endsWith("@tac-idwalalethu.com"))) && !addMemberButton && <FeedBack />}
-
-        {myUser && myUser.email.endsWith("@tac-idwalalethu.com") && !addMemberButton && <Administrator/>}
-      </div>
-      
+          {myUser &&
+            myUser.email.endsWith("@tac-idwalalethu.com") &&
+            !addMemberButton && <Administrator />}
+        </div>
       </div>
       <div>{LogIn && <LoginPage />}</div>
     </div>
