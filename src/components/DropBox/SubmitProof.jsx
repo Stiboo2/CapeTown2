@@ -1,4 +1,5 @@
 import React, { Fragment, useState, useEffect } from "react";
+import { v4 as uuidv4 } from "uuid";
 import "./Expenses.css";
 import "./MealsButton.css";
 import "./Meals.css";
@@ -21,17 +22,22 @@ const SubmitProof = () => {
   const [feedback, setFeedback] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [proofofPayment, setProofofPayment] = useState(null);
-  const [feedbackVisible, setFeedbackVisible] = useState(true);
+  const [feedbackVisible, setFeedbackVisible] = useState(false);
   const [accountVisible, setAccountVisible] = useState(true);
   const [confirmWindowIsShown, setConfirmWindowIsShown] = useState(false);
+  const [messageWindowIsShown, SetMessageWindowIsShown] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [feedbackSubVisible, setFeedbackSubVisible] = useState(true);
   const [feedbackCount, setFeedbackCount] = useState(false);
+  const [exportedMessage, setExportedMessage] = useState(null);
+  const [submitMessage, setSubmitMessage] = useState(false);
 
   const MemberHandler = () => {
-    setAddMemberButton(!addMemberButton); // delete**** change the name
+    setAddMemberButton(!addMemberButton);
     setFeedback(true);
+    setFeedbackVisible(false);
   };
+
   const SaveProof = (ProofofPayment) => {
     setProofofPayment(ProofofPayment);
     MemberHandler();
@@ -39,20 +45,67 @@ const SubmitProof = () => {
     setFeedbackCount(false);
     setFeedbackSubVisible(false);
   };
-  const FeedbackHandler = () => {
+
+  const handleFeedbackButtonClick = () => {
     if (feedbackCount) {
       setFeedbackSubVisible(false);
+      setSubmitMessage(true);
+      setFeedbackCount(false);
     } else {
       setFeedbackCount(true);
     }
+
     setFeedbackVisible((prevVisible) => !prevVisible);
   };
+
   const AccountHandler = () => {
     setAccountVisible((prevVisible) => !prevVisible);
+  };
+  const hideMessageWindowHandler = () => {
+    SetMessageWindowIsShown(false);
   };
   const hideConfirmWindowHandler = () => {
     setConfirmWindowIsShown(false);
   };
+
+  const handleExportedMessageChange = (newMessage) => {
+    setExportedMessage(newMessage);
+  };
+  useEffect(() => {
+    if (submitMessage) {
+      setIsLoading(true);
+      const sendProofCloud = async () => {
+        const parentNode = "paymentsComments";
+        const apiEndpoint = process.env.REACT_APP_API_BASE_URL;
+        const random_id = uuidv4(); // Generate a unique ID
+        try {
+          const response = await fetch(
+            `${apiEndpoint}/${parentNode}/${random_id}.json`,
+            {
+              method: "PUT",
+              body: JSON.stringify(exportedMessage),
+            }
+          );
+
+          setIsLoading(false);
+
+          if (response.ok) {
+            SetMessageWindowIsShown(true);
+          }
+
+          if (!response.ok) {
+            throw new Error("Sending Comments data failed.");
+          }
+
+          setIsSubmitting(false);
+        } catch (error) {
+          // Handle error
+        }
+      };
+
+      sendProofCloud();
+    }
+  }, [submitMessage]);
   useEffect(() => {
     if (proofofPayment) {
       setIsLoading(true);
@@ -98,9 +151,20 @@ const SubmitProof = () => {
         <div className="meals">
           {confirmWindowIsShown && (
             <ConfirmWindow
+              firstMsg={"Thank You "}
               title={proofofPayment.title}
               name={proofofPayment.name}
+              lastMsg={" for submiting your tithe"}
               onClose={hideConfirmWindowHandler}
+            />
+          )}
+          {messageWindowIsShown && (
+            <ConfirmWindow
+              firstMsg={"Thank you"}
+              title={""}
+              name={""}
+              lastMsg={" for your feedback"}
+              onClose={hideMessageWindowHandler}
             />
           )}
           {!submitted && (
@@ -123,15 +187,19 @@ const SubmitProof = () => {
             myUser &&
             !myUser.email.endsWith("@tac-idwalalethu.com") | !myUser &&
             feedbackSubVisible && (
-              <button className={classes.buttonAdd} onClick={FeedbackHandler}>
-                {feedbackVisible ? "Feedback" : "Submit"}
+              <button
+                className={classes.buttonAdd}
+                onClick={handleFeedbackButtonClick}
+              >
+                {feedbackVisible ? "Submit" : "Feedback"}
               </button>
             )}
-
-          {!feedbackVisible &&
+          {feedbackVisible &&
             myUser &&
             !myUser.email.endsWith("@tac-idwalalethu.com") &&
-            !addMemberButton && <FeedBack />}
+            !addMemberButton && (
+              <FeedBack onFeedbackSubmit={handleExportedMessageChange} />
+            )}
 
           {myUser &&
             myUser.email.endsWith("@tac-idwalalethu.com") &&

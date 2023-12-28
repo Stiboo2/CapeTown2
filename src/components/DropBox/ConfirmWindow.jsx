@@ -13,7 +13,9 @@ const ConfirmWindow = (props) => {
     <React.Fragment>
       <div className={classes.total}>
         <div>
-          Thank You {props.title} {props.name} for submiting your tithe
+          {props.firstMsg}
+          {props.title} {props.name}
+          {props.lastMsg}
         </div>
       </div>
       {modalActions}

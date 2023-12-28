@@ -67,7 +67,7 @@ const UploadCashBook = (props) => {
           <div className="--form-control">
             <div>
               <div>
-                <label>Proof of Payment:</label>
+                <label>Proof of Purchase :</label>
               </div>
               <input
                 className={classes.imageinput}
