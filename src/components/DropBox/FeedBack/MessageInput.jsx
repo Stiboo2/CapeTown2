@@ -6,12 +6,12 @@ const MessageInput = ({ maxWords, onMessageChange }) => {
 
   const handleInputChange = (event) => {
     const inputMessage = event.target.value;
-    const words = inputMessage.split(/\s+/).filter((word) => word !== ""); // Split by whitespace and filter out empty strings
-    const currentWordCount = words.length;
+    const characters = inputMessage.split(""); // Split the string into an array of characters
+    const currentCharacterCount = characters.length;
 
-    if (currentWordCount <= maxWords) {
+    if (currentCharacterCount <= maxWords) {
       setMessage(inputMessage);
-      setRemainingWords(maxWords - currentWordCount);
+      setRemainingWords(maxWords - currentCharacterCount);
       onMessageChange(inputMessage);
     }
   };

@@ -72,7 +72,7 @@ const SubmitProof = () => {
     setExportedMessage(newMessage);
   };
   useEffect(() => {
-    if (submitMessage) {
+    if (submitMessage && submitMessage.message !== "") {
       setIsLoading(true);
       const sendProofCloud = async () => {
         const parentNode = "paymentsComments";
@@ -197,7 +197,8 @@ const SubmitProof = () => {
           {feedbackVisible &&
             myUser &&
             !myUser.email.endsWith("@tac-idwalalethu.com") &&
-            !addMemberButton && (
+            !addMemberButton &&
+            feedbackSubVisible && (
               <FeedBack onFeedbackSubmit={handleExportedMessageChange} />
             )}
 
