@@ -8,15 +8,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: white;
+  background: rgb(241, 231, 231);
   border-color: var(--clr-gold);
   font-size: 1rem;
-  color: black;
+  color: rgb(26, 12, 227);
   cursor: pointer;
   transition: var(--transition);
-  border-radius: 5px;
+  border-radius: 20px;
   margin-top: auto;
   margin-bottom: 0.25rem;
+  font-weight: bold;
 }
 .ptext {
   font: white;
@@ -27,7 +28,7 @@
   font: inherit;
   color: #fffcfb;
   cursor: pointer;
-  background-color: #5a1a01;
+  background-color: #f0e514;
   border-color: white;
   border-radius: 25px;
   padding: 0rem 0.5rem;
