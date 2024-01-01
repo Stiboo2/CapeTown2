@@ -5,20 +5,21 @@ const UploadCashBook = (props) => {
   const { setFlagProof } = useGlobalContext();
   const [ProofPic, setProofPic] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  /*   const [isLoading, setIsLoading] = useState(false);
   const [showUploadeBtn, setIshowUploadeBtn] = useState(false);
   const cloudName = process.env.REACT_APP_CLOUDINARY_CLOUD_NAME;
-  const uploadPreset = process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET;
+  const uploadPreset = process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET; */
 
   const handleImageChange = (e) => {
     const selectedPhoto = e.target.files[0];
     setProofPic(selectedPhoto);
     setImagePreview(URL.createObjectURL(selectedPhoto));
-    setIshowUploadeBtn(true);
+    // setIshowUploadeBtn(true);
     setFlagProof(true);
+    props.onImageUploaded(selectedPhoto);
   };
 
-  const uploadImage = async () => {
+  /*   const uploadImage = async () => {
     setIsLoading(true);
     setIshowUploadeBtn(false);
     let imageURL;
@@ -53,7 +54,7 @@ const UploadCashBook = (props) => {
     }
 
     setIsLoading(false);
-  };
+  }; */
 
   return (
     <section className="--flex-center">
@@ -77,7 +78,7 @@ const UploadCashBook = (props) => {
                 onChange={handleImageChange}
               />
             </div>
-            <div>
+            {/*             <div>
               {isLoading
                 ? "Uploading..."
                 : showUploadeBtn && (
@@ -85,7 +86,7 @@ const UploadCashBook = (props) => {
                       Upload Image
                     </button>
                   )}
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
