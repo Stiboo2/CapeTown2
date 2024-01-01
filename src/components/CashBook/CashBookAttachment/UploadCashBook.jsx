@@ -5,21 +5,22 @@ const UploadCashBook = (props) => {
   const { setFlagProof } = useGlobalContext();
   const [ProofPic, setProofPic] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
-  /*   const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [showUploadeBtn, setIshowUploadeBtn] = useState(false);
+
   const cloudName = process.env.REACT_APP_CLOUDINARY_CLOUD_NAME;
-  const uploadPreset = process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET; */
+  const uploadPreset = process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESETX;
 
   const handleImageChange = (e) => {
     const selectedPhoto = e.target.files[0];
     setProofPic(selectedPhoto);
     setImagePreview(URL.createObjectURL(selectedPhoto));
-    // setIshowUploadeBtn(true);
+    setIshowUploadeBtn(true);
     setFlagProof(true);
-    props.onImageUploaded(selectedPhoto);
+    props.onSaveImageURL(selectedPhoto);
   };
 
-  /*   const uploadImage = async () => {
+  const uploadImage = async () => {
     setIsLoading(true);
     setIshowUploadeBtn(false);
     let imageURL;
@@ -48,13 +49,13 @@ const UploadCashBook = (props) => {
 
         // setImagePreview(null);
       }
-      props.onImageUpload(imageURL);
+      props.onSaveImageURL(imageURL);
     } catch (error) {
       console.log(error);
     }
 
     setIsLoading(false);
-  }; */
+  };
 
   return (
     <section className="--flex-center">
@@ -68,7 +69,7 @@ const UploadCashBook = (props) => {
           <div className="--form-control">
             <div>
               <div>
-                <label>Proof of Purchase :</label>
+                <label className={classes.ptext}>Proof of Purchase :</label>
               </div>
               <input
                 className={classes.imageinput}
@@ -78,15 +79,20 @@ const UploadCashBook = (props) => {
                 onChange={handleImageChange}
               />
             </div>
-            {/*             <div>
-              {isLoading
-                ? "Uploading..."
-                : showUploadeBtn && (
-                    <button onClick={uploadImage} className={classes.imageSave}>
-                      Upload Image
-                    </button>
-                  )}
-            </div> */}
+            {
+              <div>
+                {isLoading
+                  ? "Uploading..."
+                  : showUploadeBtn && (
+                      <button
+                        onClick={uploadImage}
+                        className={classes.imageSava}
+                      >
+                        Upload recipt
+                      </button>
+                    )}
+              </div>
+            }
           </div>
         </div>
       </div>

@@ -18,8 +18,12 @@
   margin-top: auto;
   margin-bottom: 0.25rem;
 }
+.ptext {
+  font: white;
+  color: white;
+}
 
-.imageSave {
+.imageSava {
   font: inherit;
   color: #fffcfb;
   cursor: pointer;

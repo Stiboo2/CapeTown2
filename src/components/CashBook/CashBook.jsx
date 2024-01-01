@@ -5,15 +5,11 @@ import UploadCashBook from "./CashBookAttachment/UploadCashBook";
 
 const CashBook = () => {
   const cloudName = process.env.REACT_APP_CLOUDINARY_CLOUD_NAME;
-  const uploadPreset = process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET;
   const folder = process.env.REACT_APP_CLOUDINARY_CLOUD_FOLDER_TAC;
   const dynamicValue = "hkj7nwjctabyzrsvhtbj";
   const imageUrl = `https://res.cloudinary.com/${cloudName}/image/upload/v1700912962/${folder}/${dynamicValue}.png`;
   const [selectedOtherOptions, setSelectedOtherOptions] = useState(false);
-  const [image, setImage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [isNotBackFromLoadingImage, setIsNotBackFromLoadingImage] =
-    useState(true);
   const [imageSuccefullySend, SetImageSuccefullySend] = useState(false);
   const [isAttachment, setIsAttachment] = useState(false);
   const [otherInputValue, setOtherInputValue] = useState("");
@@ -21,9 +17,9 @@ const CashBook = () => {
 
   const [selectedProvince, setSelectedProvince] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
-  const [imageInputURL, setImageInputURL] = useState("");
+  const [imageURL, setImageURL] = useState("");
   const [branch, setBranch] = useState("");
-  const [receivedBy, setReceivedBy] = useState("");
+  const [amount, setAmount] = useState("");
   const [spender, setSpender] = useState("");
   const [signBy, setSignBy] = useState("");
   const [options, setOptions] = useState("");
@@ -80,64 +76,55 @@ const CashBook = () => {
     console.log("submitHandler ");
     try {
       console.log("in side ");
-      if (isAttachment) {
-        await uploadImage();
-      }
-      console.log("after try ");
 
-      if (!isAttachment || (isAttachment && imageSuccefullySend)) {
-        // Prepare the data to be sent to the database
-        const formData = {
-          selectedProvince,
-          selectedDate,
-          imageInputURL: isAttachment ? imageInputURL : "", // Use the uploaded image URL if available
-          branch,
-          receivedBy,
-          spender,
-          signBy,
-          options,
-        };
-
-        // Send formData to the "recipts" database
-        const parentNode = "recipts";
-        const apiEndpoint = process.env.REACT_APP_API_BASE_URL;
-        const random_id = uuidv4(); // Generate a unique ID
-        console.log(formData);
-        const response = await fetch(
-          `${apiEndpoint}/${parentNode}/${random_id}.json`,
-          {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-              // Add any other headers as needed
-            },
-            body: JSON.stringify(formData),
-          }
-        );
-
-        if (response.ok) {
-          // Handle success (e.g., show a success message)
-          console.log("Data sent to the recipts database successfully!");
-          // You may also show your success message or navigate to another page.
-          // SetMessageWindowIsShown(true);
-        } else {
-          // Handle failure (e.g., show an error message)
-          console.error("Failed to send data to the recipts database");
+      const formData = {
+        Province: selectedProvince,
+        Date: selectedDate,
+        Image: imageURL,
+        Branch: branch,
+        Amount: amount,
+        Spender: spender,
+        SignBy: signBy,
+        category: options,
+      };
+      const parentNode = "recipts";
+      const apiEndpoint = process.env.REACT_APP_API_BASE_URL;
+      const random_id = uuidv4();
+      console.log(formData);
+      const response = await fetch(
+        `${apiEndpoint}/${parentNode}/${random_id}.json`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
         }
+      );
+
+      if (response.ok) {
+        console.log("Data sent to the recipts database successfully!");
+        setSelectedProvince("");
+        setSelectedDate("");
+        setImageURL("");
+        setBranch("");
+        setAmount("");
+        setSpender("");
+        setSignBy("");
+        setOptions("");
       } else {
-        console.log("Data was not sent to the recipts database !!!!!!!!!!!!");
+        console.error("Failed to send data to the recipts database");
       }
     } catch (error) {
-      // Handle any unexpected errors during the process
       console.error("An error occurred:", error);
     }
   };
 
-  const imageUploadedHandler = (LoadedImage) => {
-    setImage(LoadedImage);
-    setIsAttachment(true);
+  const saveImageURLHandler = (imageURL) => {
+    setImageURL(imageURL);
   };
-  const uploadImage = async () => {
+
+  /* const uploadImage = async () => {
     setIsLoading(true);
     let imageURL;
     try {
@@ -170,19 +157,19 @@ const CashBook = () => {
     } catch (error) {
       SetImageSuccefullySend(false);
       console.log(error);
-    }
+    } 
 
     setIsLoading(false);
     setIsNotBackFromLoadingImage(false);
-  };
+  };*/
   const handleProvinceChange = (event) => {
     setSelectedProvince(event.target.value);
   };
   const handleBranchChange = (event) => {
     setBranch(event.target.value);
   };
-  const handleReceivedByChange = (event) => {
-    setReceivedBy(event.target.value);
+  const handleAmountChange = (event) => {
+    setAmount(event.target.value);
   };
   const handleSpenderChange = (event) => {
     setSpender(event.target.value);
@@ -342,19 +329,19 @@ const CashBook = () => {
                 id="recieved_by"
                 placeholder="0.00"
                 className={classes.inputAmount}
-                value={receivedBy}
-                onChange={handleReceivedByChange}
+                value={amount}
+                onChange={handleAmountChange}
               />
             </span>
           </p>
         )}
       </div>
-      <UploadCashBook onImageUploaded={imageUploadedHandler} />
+      <UploadCashBook onSaveImageURL={saveImageURLHandler} />
 
       {isLoading ? (
         <p>Uploading...</p>
       ) : (
-        <button onClick={submitHandler} className={classes.imageSave}>
+        <button onClick={submitHandler} className={classes.imageSava}>
           Submit
         </button>
       )}
