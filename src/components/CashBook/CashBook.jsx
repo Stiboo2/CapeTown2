@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import classes from "./CashBook.module.css"; // Adjust the import path
 import UploadCashBook from "./CashBookAttachment/UploadCashBook";
+import Reference from "./Reference";
 
 const CashBook = () => {
   const cloudName = process.env.REACT_APP_CLOUDINARY_CLOUD_NAME;
@@ -23,6 +24,8 @@ const CashBook = () => {
   const [spender, setSpender] = useState("");
   const [signBy, setSignBy] = useState("");
   const [options, setOptions] = useState("");
+  const [referenceNumber, setReferenceNumber] = useState("Loading.....");
+  const [changed, setChanged] = useState("false");
 
   useEffect(() => {
     if (selectedOptions.includes("Other")) {
@@ -67,6 +70,15 @@ const CashBook = () => {
     } else {
       setSelectedOptions([...selectedOptions, option]);
     }
+  };
+  const onReferenceHandler = (ref) => {
+    // Introduce a delay of 1000 milliseconds (1 second)
+    setTimeout(() => {
+      setReferenceNumber(ref);
+    }, 1000);
+    setTimeout(() => {
+      console.log(referenceNumber);
+    }, 1000);
   };
   const handleOtherInputChange = (e) => {
     // Update the value of the "Other" input field
@@ -163,6 +175,7 @@ const CashBook = () => {
     setIsNotBackFromLoadingImage(false);
   };*/
   const handleProvinceChange = (event) => {
+    setChanged("true");
     setSelectedProvince(event.target.value);
   };
   const handleBranchChange = (event) => {
@@ -180,6 +193,7 @@ const CashBook = () => {
   };
   return (
     <div className={classes.container}>
+      <Reference onReference={onReferenceHandler} change={changed} />
       <div className={classes.mainBox}>
         <div className={classes.firstRows}>
           <div className={classes.imageContainer}>
@@ -196,7 +210,7 @@ const CashBook = () => {
             </div>
           </div>
 
-          <div className={classes.receiptNumber}>123456789</div>
+          <div className={classes.receiptNumber}>{referenceNumber}</div>
         </div>
 
         <div className={classes.secondRow}>
@@ -341,7 +355,11 @@ const CashBook = () => {
       {isLoading ? (
         <p>Uploading...</p>
       ) : (
-        <button onClick={submitHandler} className={classes.imageSava}>
+        <button
+          onClick={submitHandler}
+          changed={changed}
+          className={classes.imageSava}
+        >
           Submit
         </button>
       )}
