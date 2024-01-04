@@ -1,40 +1,45 @@
 import React, { useState, useEffect } from "react";
-import ValidHoldComponent from "./ValidHoldComponent";
+import { get, ref } from "firebase/database";
+import { database } from "../../LoginPage/firebase-config";
 
 const Reference = (props) => {
   const [receipts, setReceipts] = useState([]);
-  const [next, setNext] = useState(false);
+  const [foundRef, setFoundRef] = useState(false);
   const [newSessionId, setNewSessionId] = useState(
     "thradebe@tac-idwalalethu.com"
   );
-  useEffect(() => {
-    const fetchReceipts = async () => {
-      try {
-        const response = await fetch(
-          "https://tac-capetown-default-rtdb.firebaseio.com/reference.json"
-        );
 
-        if (!response.ok) {
-          console.error("Failed to fetch receipts data");
-          return;
-        }
+  const fetchPayments = async () => {
+    try {
+      const usersRef = ref(database, "reference");
 
-        const data = await response.json();
+      const snapshot = await get(usersRef);
 
-        if (data) {
-          const receiptsArray = Object.values(data);
-          setReceipts(receiptsArray);
-          console.log("Fetched Reference Data:", data);
-        }
-      } catch (error) {
-        console.error("An error occurred while fetching data:", error);
+      if (snapshot.exists()) {
+        const refArray = Object.entries(snapshot.val()).map(([id, data]) => ({
+          id,
+          ...data,
+        }));
+
+        setReceipts(refArray);
+      } else {
+        console.log("No data available");
       }
-    };
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
-    fetchReceipts();
-  }, []); // Empty dependency array to ensure the effect runs only once on component mount
+  const executeEffects = async () => {
+    await fetchPayments();
+    setTimeout(() => {
+      handleAllocateReference();
+    }, 1000);
+  };
 
-  // Replace with actual new session ID
+  useEffect(() => {
+    executeEffects();
+  }, []); // Add dependencies if needed
 
   const findValidHold = () => {
     const firstCondition = (receipt) =>
@@ -43,19 +48,42 @@ const Reference = (props) => {
       receipt.status === "hold" &&
       receipt.holdExpiration !== null &&
       Date.now() > receipt.holdExpiration;
+    let result;
+    setReceipts((prevReceipts) => {
+      console.log("receipts", prevReceipts);
 
-    // Find the receipt based on the first condition
-    let result = receipts.find(firstCondition);
+      result = prevReceipts.some(firstCondition);
+      console.log("result firstCondition", result);
 
-    // If not found, find the receipt based on the second condition
-    if (!result) {
-      result = receipts.find(secondCondition);
-    }
+      if (!result) {
+        console.log("try secondCondition");
+        result = prevReceipts.some(secondCondition);
+      }
 
+      console.log("result inside secondCondition", result);
+      return prevReceipts;
+    });
+    setReceipts((updatedReceipts) => {
+      const allocatedReferenceData = updatedReceipts.find(
+        (receipt) =>
+          receipt.holderSessionId === newSessionId && receipt.status === "hold"
+      );
+      if (allocatedReferenceData) {
+        setFoundRef(true);
+        result = allocatedReferenceData;
+        console.log(
+          "result inside allocatedReferenceData",
+          allocatedReferenceData
+        );
+      }
+
+      return updatedReceipts;
+    });
+    console.log("result outside", result);
     return result;
   };
+
   const reassignReference = (validHold) => {
-    console.log(`Releasing old session: ${validHold.holderSessionId}`);
     validHold.status = "hold";
     validHold.holderSessionId = newSessionId;
     const newExpirationTime = Date.now() + 2 * 60 * 1000; // 2 minutes in milliseconds
@@ -63,80 +91,63 @@ const Reference = (props) => {
     console.log(
       `Assigned old session: ${validHold.holderSessionId} to reference: ${validHold.reference}`
     );
-    console.log(`New expiration time: ${new Date(newExpirationTime)}`);
-    console.log("Reassigned Reference:", validHold.reference);
-    // Update setReceipts
+
     setReceipts((prevReceipts) =>
       prevReceipts.map((receipt) =>
         receipt.reference === validHold.reference ? validHold : receipt
       )
     );
-    console.log("After Allocated new receipts array", receipts);
   };
-  useEffect(() => {
-    const handleAllocateReference = () => {
-      const validHold = findValidHold();
 
-      if (validHold) {
-        reassignReference(validHold);
-      } else {
+  const handleAllocateReference = () => {
+    const validHold = findValidHold();
+    console.log("validHold", validHold);
+    console.log("foundRef", foundRef);
+
+    if (foundRef) {
+      console.log("IT WILL REPLACE THE REF");
+      reassignReference(validHold);
+    } else {
+      console.log("IT WILL CREATE A NEW REF");
+
+      setReceipts((prevReceipts) => {
+        const maxReceiptId = Math.max(
+          ...prevReceipts.map((receipt) => parseInt(receipt.reference.slice(4)))
+        );
+
         console.log(
           "All receipt IDs:",
-          receipts.map((receipt) => receipt.reference)
+          prevReceipts.map((receipt) => receipt.reference)
         );
 
-        const maxReceiptId = Math.max(
-          ...receipts.map((receipt) => parseInt(receipt.reference.slice(4)))
-        );
-
-        console.log("maxReceiptId", maxReceiptId);
         const newReceipt = {
+          id: `TAC-${maxReceiptId + 1}`,
+          holderSessionId: newSessionId,
+          holdExpiration: Date.now() + 2 * 60 * 1000,
           reference: `TAC-${maxReceiptId + 1}`,
           status: "hold",
-          holderSessionId: newSessionId,
-          holdExpiration: Date.now() + 2 * 60 * 1000, // Assuming 2 minutes expiration time
         };
 
-        // Use the callback provided by setReceipts to ensure you have the latest state
-        setReceipts((prevReceipts) => [...prevReceipts, newReceipt]);
+        const newReceipts = [...prevReceipts, newReceipt];
 
-        console.log("After Allocated new receipts array", [
-          ...receipts,
-          newReceipt,
-        ]);
+        return newReceipts;
+      });
+    }
 
-        // Use the callback provided by setReceipts to ensure you have the latest state
-        setReceipts((updatedReceipts) => {
-          const allocatedReferenceData = updatedReceipts.find(
-            (receipt) =>
-              receipt.holderSessionId === newSessionId &&
-              receipt.status === "hold"
-          );
-          if (allocatedReferenceData) {
-            console.log(allocatedReferenceData);
-            props.onReference(allocatedReferenceData.reference);
-          }
-
-          const allocatedReference = allocatedReferenceData.reference;
-          console.log(allocatedReference);
-
-          // Log the array of newSessionId values
-          console.log(updatedReceipts);
-
-          // Call the onReference prop with the reference
-          props.onReference(allocatedReference);
-
-          return updatedReceipts;
-        });
+    setReceipts((updatedReceipts) => {
+      const allocatedReferenceData = updatedReceipts.find(
+        (receipt) =>
+          receipt.holderSessionId === newSessionId && receipt.status === "hold"
+      );
+      if (allocatedReferenceData) {
+        props.onReference(allocatedReferenceData.reference);
       }
-    };
-    handleAllocateReference();
-    console.log("props.change", props.change);
-  }, [props.change]); // Add props.change to the dependency array
 
-  // ... (existing return statement and component logic)
+      return updatedReceipts;
+    });
+  };
 
-  return <div></div>;
+  return <div></div>; // Replace with your actual JSX content
 };
 
 export default Reference;
