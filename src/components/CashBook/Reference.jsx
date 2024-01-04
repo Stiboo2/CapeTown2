@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { get, ref } from "firebase/database";
+import { get, ref, push, set } from "firebase/database";
 import { database } from "../../LoginPage/firebase-config";
 
 const Reference = (props) => {
   const [receipts, setReceipts] = useState([]);
-  const [foundRef, setFoundRef] = useState(false);
-  const [newSessionId, setNewSessionId] = useState(
-    "thradebe@tac-idwalalethu.com"
-  );
+  const [newSessionId, setNewSessionId] = useState("thabo.radebe@live.com");
+  const [dataSentToDatabase, setDataSentToDatabase] = useState(false);
 
-  const fetchPayments = async () => {
+  const fetchReference = async () => {
     try {
       const usersRef = ref(database, "reference");
 
@@ -31,10 +29,10 @@ const Reference = (props) => {
   };
 
   const executeEffects = async () => {
-    await fetchPayments();
+    await fetchReference();
     setTimeout(() => {
       handleAllocateReference();
-    }, 1000);
+    }, 10);
   };
 
   useEffect(() => {
@@ -48,6 +46,7 @@ const Reference = (props) => {
       receipt.status === "hold" &&
       receipt.holdExpiration !== null &&
       Date.now() > receipt.holdExpiration;
+
     let result;
     setReceipts((prevReceipts) => {
       console.log("receipts", prevReceipts);
@@ -63,63 +62,46 @@ const Reference = (props) => {
       console.log("result inside secondCondition", result);
       return prevReceipts;
     });
+
+    let newReceipts;
     setReceipts((updatedReceipts) => {
       const allocatedReferenceData = updatedReceipts.find(
         (receipt) =>
           receipt.holderSessionId === newSessionId && receipt.status === "hold"
       );
+
       if (allocatedReferenceData) {
-        setFoundRef(true);
         result = allocatedReferenceData;
         console.log(
           "result inside allocatedReferenceData",
           allocatedReferenceData
         );
-      }
+        console.log("result inside result", result);
 
-      return updatedReceipts;
-    });
-    console.log("result outside", result);
-    return result;
-  };
+        console.log("IT WILL REPLACE THE REF");
 
-  const reassignReference = (validHold) => {
-    validHold.status = "hold";
-    validHold.holderSessionId = newSessionId;
-    const newExpirationTime = Date.now() + 2 * 60 * 1000; // 2 minutes in milliseconds
-    validHold.holdExpiration = newExpirationTime;
-    console.log(
-      `Assigned old session: ${validHold.holderSessionId} to reference: ${validHold.reference}`
-    );
-
-    setReceipts((prevReceipts) =>
-      prevReceipts.map((receipt) =>
-        receipt.reference === validHold.reference ? validHold : receipt
-      )
-    );
-  };
-
-  const handleAllocateReference = () => {
-    const validHold = findValidHold();
-    console.log("validHold", validHold);
-    console.log("foundRef", foundRef);
-
-    if (foundRef) {
-      console.log("IT WILL REPLACE THE REF");
-      reassignReference(validHold);
-    } else {
-      console.log("IT WILL CREATE A NEW REF");
-
-      setReceipts((prevReceipts) => {
-        const maxReceiptId = Math.max(
-          ...prevReceipts.map((receipt) => parseInt(receipt.reference.slice(4)))
-        );
-
+        allocatedReferenceData.status = "hold";
+        allocatedReferenceData.holderSessionId = newSessionId;
+        const newExpirationTime = Date.now() + 2 * 60 * 1000; // 2 minutes in milliseconds
+        allocatedReferenceData.holdExpiration = newExpirationTime;
         console.log(
-          "All receipt IDs:",
-          prevReceipts.map((receipt) => receipt.reference)
+          `Assigned old session: ${allocatedReferenceData.holderSessionId} to reference: ${allocatedReferenceData.reference}`
         );
-
+        console.log(
+          "allocatedReferenceData reference",
+          allocatedReferenceData.reference
+        );
+        newReceipts = [...updatedReceipts];
+        newReceipts[newReceipts.indexOf(allocatedReferenceData)] =
+          allocatedReferenceData;
+      } else {
+        console.log("IT WILL CREATE A NEW REF");
+        const maxReceiptId = Math.max(
+          ...updatedReceipts.map((receipt) =>
+            parseInt(receipt.reference.slice(4))
+          )
+        );
+        console.log("maxReceiptId", maxReceiptId);
         const newReceipt = {
           id: `TAC-${maxReceiptId + 1}`,
           holderSessionId: newSessionId,
@@ -128,11 +110,38 @@ const Reference = (props) => {
           status: "hold",
         };
 
-        const newReceipts = [...prevReceipts, newReceipt];
+        newReceipts = [...updatedReceipts, newReceipt];
+      }
 
-        return newReceipts;
-      });
+      console.log("After Allocated new receipts array", newReceipts);
+      return newReceipts;
+    });
+    console.log("result outside", result);
+  };
+
+  const pushDataToDatabase = async (allocatedReferenceData) => {
+    if (!dataSentToDatabase) {
+      try {
+        const referenceId = allocatedReferenceData.id; // Assuming 'id' is the unique identifier
+        const referencePath = `reference/${referenceId}`;
+
+        // Use set method to update or create data at the specific path
+        await set(ref(database, referencePath), allocatedReferenceData);
+
+        console.log(
+          `Data successfully pushed to the database with reference key ${allocatedReferenceData.key}`
+        );
+        setDataSentToDatabase(true);
+      } catch (error) {
+        console.error(`Error pushing data to the database:`, error);
+      }
+    } else {
+      console.log("Data hasn't changed. Skipping push to the database.");
     }
+  };
+
+  const handleAllocateReference = () => {
+    findValidHold();
 
     setReceipts((updatedReceipts) => {
       const allocatedReferenceData = updatedReceipts.find(
@@ -141,6 +150,7 @@ const Reference = (props) => {
       );
       if (allocatedReferenceData) {
         props.onReference(allocatedReferenceData.reference);
+        pushDataToDatabase(allocatedReferenceData);
       }
 
       return updatedReceipts;
