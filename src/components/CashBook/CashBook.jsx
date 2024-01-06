@@ -98,21 +98,19 @@ const CashBook = () => {
         Spender: spender,
         SignBy: signBy,
         category: options,
+        reference: referenceNumber,
       };
       const parentNode = "recipts";
-      const apiEndpoint = process.env.REACT_APP_API_BASE_URL;
+      const high = process.env.REACT_APP_API_BASE_URL;
       const random_id = uuidv4();
       console.log(formData);
-      const response = await fetch(
-        `${apiEndpoint}/${parentNode}/${random_id}.json`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        }
-      );
+      const response = await fetch(`${high}/${parentNode}/${random_id}.json`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
       if (response.ok) {
         console.log("Data sent to the recipts database successfully!");
@@ -312,7 +310,7 @@ const CashBook = () => {
           <input
             type="text"
             id="sign_by"
-            placeholder="High Authority"
+            placeholder="Spender"
             className={classes.input}
             value={signBy}
             onChange={handleSignByChange}
@@ -321,7 +319,7 @@ const CashBook = () => {
           <input
             type="text"
             id="spender"
-            placeholder="Spender"
+            placeholder="High Authority"
             className={classes.input}
             value={spender}
             onChange={handleSpenderChange}
@@ -340,7 +338,7 @@ const CashBook = () => {
               AMOUNT :<span style={{ color: "black" }}>R</span>
               <input
                 type="text"
-                id="recieved_by"
+                id="amount"
                 placeholder="0.00"
                 className={classes.inputAmount}
                 value={amount}
