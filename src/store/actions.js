@@ -1,8 +1,22 @@
+export const CLEAR_CART = "CLEAR_CART";
+export const REMOVE = "REMOVE";
+export const INCREASE = "INCREASE";
+export const DECREASE = "DECREASE";
 export const LOADING = "LOADING";
+export const DISPLAY_ITEMS = "DISPLAY_ITEMS";
+export const NEW_BRANCH_DATE = "NEW_BRANCH_DATE";
+export const UPDATE_ATTENDANCE_RECORD = "UPDATE_ATTENDANCE_RECORD";
+export const REMOVE_MEMBER = "REMOVE_MEMBER";
 export const NOTIFICATION_DISPLAY = "NOTIFICATION_DISPLAY";
 export const WARNING = "WARNING";
-export const SUBMITTING = "SUBMITTING";
+export const REPLACE_MEMBERS_DATA = "REPLACE_MEMBERS_DATA";
+export const SUBMITING = "SUBMITING";
 export const FLAG = "FLAG";
-export const FLAG_PROOF = "FLAG_PROOF";
+export const FLAGPROOF = "FLAGPROOF";
+export const BRANCH_NAME = "BRANCH_NAME";
+export const RELOAD_MEMBERS = "RELOAD_MEMBERS";
+export const ADD_MEMBER = "ADD_MEMBER";
 export const WANT_TO_LOG_IN = "WANT_TO_LOG_IN";
-
+export const EDITMEMBER = "EDITMEMBER";
+export const DELETA = "DELETA";
+export const NEW_EVENT = "NEW_EVENT";

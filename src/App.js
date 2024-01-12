@@ -8,37 +8,87 @@ import {
   RouterProvider,
   Navigate,
 } from "react-router-dom";
-
-import Home from "./components/Home";
-
 import UnauthorizedPage from "./components/NotAuthorised/NotAuthorised";
 import Error from "./components/Error";
+import Meals from "./components/Meals/Meals";
+import Database from "./components/UI/person/Database";
+import UpdateMember from "./components/UpdateMember";
+import BirthDay from "./components/BirthDays/BirthDay";
 import SubmitProof from "./components/DropBox/SubmitProof";
 import PaymentsList from "./components/DropBox/PaymentList";
-import ImageComponent from "./components/DropBox/ImageComponent";
-import Meals from "./components/Meals/Meals";
-import UpdateMemberForm from "./components/UpdateMember/UpdateMemberForm";
+
+const ProtectedRoute = ({ children }) => {
+  const { myUser } = useGlobalContext();
+
+  if (!myUser) {
+    return <Navigate to="/unauthorizedpage" replace />;
+  }
+
+  return <>{children}</>;
+};
+
 const router = createBrowserRouter([
+  {
+    path: "/unauthorizedpage",
+    element: <UnauthorizedPage />,
+  },
   {
     path: "/",
     element: <RootLayout />,
-    errorElement: <Error />,
-    children: [
-      { index: true, element: <Home /> },
-      { path: "unauthorizedpage", element: <UnauthorizedPage /> },
-      { path: "SubmitProof", element: <SubmitProof /> },
-      { path: "PaymentsList", element: <PaymentsList /> },
-      { path: "/image/:id", element: <ImageComponent /> },
-      { path: "sendreport", element: <Meals /> },
-      { path: "updateMember/:id", element: <UpdateMemberForm /> },
-    ],
+  },
+  {
+    path: "sendreport",
+    element: (
+      <ProtectedRoute>
+        <Meals />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "SubmitProof",
+    element: (
+      <ProtectedRoute>
+        <SubmitProof />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "PaymentsList",
+    element: (
+      <ProtectedRoute>
+        <PaymentsList />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "churchDataBase",
+    element: (
+      <ProtectedRoute>
+        <Database />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "updateMember/:id",
+    element: (
+      <ProtectedRoute>
+        <UpdateMember />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "birthday",
+    element: (
+      <ProtectedRoute>
+        <BirthDay />
+      </ProtectedRoute>
+    ),
   },
 ]);
-
 let isInitial = true;
 let isInitial2 = true;
 
-function Application(props) {
+function App(props) {
   const [user, setUser] = useState({});
   const [sendReports, setSendReports] = useState(false);
   const {
@@ -151,4 +201,4 @@ function Application(props) {
   );
 }
 
-export default Application;
+export default App;
